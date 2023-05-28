@@ -4,41 +4,77 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+
+        <title>Create Professional Form</title>
+
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@codolog/form@1.0.0/dist/form.min.css"
         />
-        <link rel="stylesheet" href="./style/main.css" />
-        <script type="module" src="./index.js"></script>
+        <link rel="stylesheet" href="/style/stylesheet.min.css" />
     </head>
     <body>
         <main>
             <div class="form-container">
-                <form name="human">
+                <form name="human" id="form">
                     <div>
-                        <label class="form">First Name</label>
-                        <input type="text" class="form" name="first-name" />
-                        <span class="message form" data-for="first-name"></span>
+                        <h2 class="form__title">Sign Up</h2>
                     </div>
 
                     <div>
-                        <label class="form">Last Name</label>
-                        <input type="text" class="form" name="last-name" />
-                        <span class="message form" data-for="last-name"></span>
+                        <label class="form">Username:</label>
+                        <input type="text" class="form" name="user-name" />
+                        <span class="message form" data-for="user-name"></span>
                     </div>
 
                     <div>
-                        <label class="form">Age</label>
-                        <input type="number" class="form" name="age" />
-                        <span class="message form" data-for="age"></span>
+                        <label class="form">Email:</label>
+                        <input type="email" class="form" name="user-email" />
+                        <span class="message form" data-for="user-email"></span>
                     </div>
 
-                    <button class="form success btn-send" type="submit">
-                        Send
+                    <div>
+                        <label class="form">Password:</label>
+                        <div class="input__wrapper">
+                            <input
+                                type="password"
+                                class="form input__password js-password-input"
+                                name="user-password"
+                                id="js-first-password"
+                            />
+                            <button
+                                class="btn__pass js-btn-password"
+                                data-target="#js-first-password"
+                            >
+                                <img src="/image/eye.png" alt="show password" />
+                            </button>
+                        </div>
+
+                        <span
+                            class="message form"
+                            data-for="user-password"
+                        ></span>
+                    </div>
+
+                    <div>
+                        <label class="form">Confirm Password:</label>
+                        <input
+                            type="password"
+                            class="form"
+                            name="user-password-confirm"
+                        />
+                        <span
+                            class="message form"
+                            data-for="user-password-confirm"
+                        ></span>
+                    </div>
+
+                    <button class="form btn-send full" type="submit">
+                        Sign Up
                     </button>
                 </form>
             </div>
         </main>
+        <script type="module" src="index.js"></script>
     </body>
 </html>
