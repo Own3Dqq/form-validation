@@ -9,7 +9,7 @@ import {
 } from './js/validator.js';
 
 const humanFormConfigs = {
-    'user-name': [isNotEmpty, minLength(4), maxLength(16)],
+    'user-name': [isNotEmpty, minLength(4) /* maxLength(16) */],
     'user-email': [isNotEmpty, checkEmail()],
     'user-password': [isNotEmpty, checkPassword()],
     'user-password-confirm': [isNotEmpty, checkConfirmPassword()],
@@ -25,9 +25,7 @@ const init = function () {
 
         [...form.elements].forEach((el) => {
             if (el.type !== 'submit') {
-                const messageError = form.querySelector(
-                    `[data-for="${el.name}"]`
-                );
+                const messageError = form.querySelector(`[data-for="${el.name}"]`);
                 messageError.innerHTML = '';
                 el.classList.remove('error');
             }
@@ -36,17 +34,13 @@ const init = function () {
         const isValid = Validator.validate(humanFormConfigs, form);
 
         if (!isValid) {
-            Object.entries(Validator.getErrors(form.name)).forEach(
-                ([name, error]) => {
-                    const messageError = form.querySelector(
-                        `[data-for="${name}"]`
-                    );
-                    form.elements[name].classList.add('error');
-                    messageError.innerHTML = Object.values(error)
-                        .map((message) => `<span>${message}</span>`)
-                        .join('<br>');
-                }
-            );
+            Object.entries(Validator.getErrors(form.name)).forEach(([name, error]) => {
+                const messageError = form.querySelector(`[data-for="${name}"]`);
+                form.elements[name].classList.add('error');
+                messageError.innerHTML = Object.values(error)
+                    .map((message) => `<span>${message}</span>`)
+                    .join('<br>');
+            });
         }
     });
 
@@ -54,21 +48,14 @@ const init = function () {
         const { target } = event;
         if (!humanFormConfigs[target.name]) return;
 
-        const isValid = Validator.validate(
-            { [target.name]: humanFormConfigs[target.name] },
-            form
-        );
-        const errors = Object.values(
-            Validator.getErrors(form.name)?.[target.name] || {}
-        );
+        const isValid = Validator.validate({ [target.name]: humanFormConfigs[target.name] }, form);
+        const errors = Object.values(Validator.getErrors(form.name)?.[target.name] || {});
         const messageError = form.querySelector(`[data-for="${target.name}"]`);
 
         if (!isValid) {
             target.classList.add('error');
             target.classList.add('error-border');
-            messageError.innerHTML = errors
-                .map((message) => `<span>${message}</span>`)
-                .join('<br>');
+            messageError.innerHTML = errors.map((message) => `<span>${message}</span>`).join('<br>');
 
             return;
         }

@@ -7,34 +7,31 @@
 
         <title>Create Professional Form</title>
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@codolog/form@1.0.0/dist/form.min.css"
-        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@codolog/form@1.0.0/dist/form.min.css" />
         <link rel="stylesheet" href="/style/stylesheet.min.css" />
     </head>
     <body>
         <main>
             <div class="form-container">
-                <form name="human" id="form">
+                <form class="form-sign-up form" name="human" id="form" method="post">
                     <div>
-                        <h2 class="form__title">Sign Up</h2>
+                        <h2 class="form-sign-up__title">Sign Up</h2>
                     </div>
 
                     <div>
-                        <label class="form">Username:</label>
+                        <label class="form form-sign-up__label">Username:</label>
                         <input type="text" class="form" name="user-name" />
                         <span class="message form" data-for="user-name"></span>
                     </div>
 
                     <div>
-                        <label class="form">Email:</label>
+                        <label class="form form-sign-up__label">Email:</label>
                         <input type="email" class="form" name="user-email" />
                         <span class="message form" data-for="user-email"></span>
                     </div>
 
                     <div>
-                        <label class="form">Password:</label>
+                        <label class="form form-sign-up__label">Password:</label>
                         <div class="input__wrapper">
                             <input
                                 type="password"
@@ -42,36 +39,32 @@
                                 name="user-password"
                                 id="js-first-password"
                             />
-                            <button
-                                class="btn__pass js-btn-password"
-                                data-target="#js-first-password"
-                            >
+                            <button class="btn__pass js-btn-password" data-target="#js-first-password">
                                 <img src="/image/eye.png" alt="show password" />
                             </button>
                         </div>
 
-                        <span
-                            class="message form"
-                            data-for="user-password"
-                        ></span>
+                        <span class="message form" data-for="user-password"></span>
                     </div>
 
                     <div>
-                        <label class="form">Confirm Password:</label>
-                        <input
-                            type="password"
-                            class="form"
-                            name="user-password-confirm"
-                        />
-                        <span
-                            class="message form"
-                            data-for="user-password-confirm"
-                        ></span>
+                        <label class="form form-sign-up__label">Confirm Password:</label>
+                        <div class="input__wrapper">
+                            <input
+                                type="password"
+                                class="form input__password js-password-input"
+                                name="user-password-confirm"
+                                id="js-second-password"
+                            />
+                            <button class="btn__pass js-btn-password" data-target="#js-second-password">
+                                <img src="/image/eye.png" alt="show password" />
+                            </button>
+                        </div>
+
+                        <span class="message form" data-for="user-password-confirm"></span>
                     </div>
 
-                    <button class="form btn-send full" type="submit">
-                        Sign Up
-                    </button>
+                    <button class="form btn-send full form-sign-up__button" type="submit">Sign Up</button>
                 </form>
             </div>
         </main>

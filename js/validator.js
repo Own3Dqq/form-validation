@@ -9,8 +9,7 @@ export const Validator = {
             errorType: 'required',
         },
         isNumber: {
-            validate: (value) =>
-                !Number.isNaN(value) && Number.isInteger(+value),
+            validate: (value) => !Number.isNaN(value) && Number.isInteger(+value),
             message: 'The field should has a integer',
             errorType: 'number',
         },
@@ -24,20 +23,19 @@ export const Validator = {
 
             return { validate, message, errorType };
         },
-        minLength(value) {
+        minLength(minValue = 3) {
             const validate = (valueInput) => {
-                return valueInput.length >= value;
+                return valueInput.length >= minValue;
             };
 
-            const message = `The uncorrect field value, must be minimum 4 symbol.`;
+            const message = `The field must be between ${minValue} and 25 characters.`;
             const errorType = 'TypeError';
 
             return { validate, message, errorType };
         },
         checkPassword() {
             const validate = (value) => {
-                const passwordRegex =
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
                 return passwordRegex.test(value);
             };
             const message =
@@ -47,8 +45,7 @@ export const Validator = {
         },
         checkEmail() {
             const validate = (value) => {
-                const emailRegex =
-                    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]{2,})?$/;
+                const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]{2,})?$/;
                 return emailRegex.test(value);
             };
             const message = 'Email address is invalid';
@@ -58,12 +55,11 @@ export const Validator = {
         },
         checkConfirmPassword() {
             const validate = (value) => {
-                const btnPass =
-                    document.querySelector('.js-password-input').value;
+                const btnPass = document.querySelector('.js-password-input').value;
                 return btnPass === value;
             };
 
-            const message = 'Please enter the password again';
+            const message = 'Password a not equal';
             const errorType = 'ValidationError';
             return { validate, message, errorType };
         },
@@ -83,9 +79,7 @@ export const Validator = {
             }
 
             if (!elements[inputName]) {
-                throw new ValidationError(
-                    `The [${inputName}] field doesn't exist in the [${form.name}]`
-                );
+                throw new ValidationError(`The [${inputName}] field doesn't exist in the [${form.name}]`);
             }
 
             const { value } = elements[inputName];
@@ -116,12 +110,5 @@ export const Validator = {
     },
 };
 
-export const {
-    isNotEmpty,
-    isNumber,
-    maxLength,
-    minLength,
-    checkPassword,
-    checkEmail,
-    checkConfirmPassword,
-} = Validator.validators;
+export const { isNotEmpty, isNumber, maxLength, minLength, checkPassword, checkEmail, checkConfirmPassword } =
+    Validator.validators;

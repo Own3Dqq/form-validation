@@ -1,3 +1,4 @@
+$label-color: #a3a3a3
 $border-color: #3d3f3f
 $border-radius: 2px
 
@@ -17,45 +18,31 @@ main
 	height: 100vh
 	padding: 10px
 
-form > div
-	margin-bottom: 20px
-
 .form-container
-	position: absolute
-	top: 50%
-	left: 50%
-	transform: translate(-50%, -50%)
 	display: block
 	margin: 0 auto
-	width: 400px
-	min-height: 510px
+	min-width: 350px
+	width: 370px
 	box-shadow: 0 0 8px 1px rgb(0 0 0 / 25%)
 	border-radius: 2px
 	background: #fff
 
-#form
-	display: block
+.form-sign-up
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+	min-height: 490px
 	position: relative
 	padding: 30px
-
-	& label
-		color: #6a6a6a
-		font-weight: 300
-
-		& button
-			text-transform: uppercase
-
-		& .form__title
-			font-size: 26px
-			text-align: center
-			padding: 10px 0
-
-		& .form__button-cancel
-			position: absolute
-			top: -30px
-			right: -30px
-			width: 25px
-			height: 25px
+	&__title
+		text-align: center
+		font-weight: 600
+		font-size: 30px
+	&__label
+		color: $label-color
+		font-weight: 400 !important
+	&__button
+		text-transform: uppercase
 
 .error-border
 	border-color: red !important
