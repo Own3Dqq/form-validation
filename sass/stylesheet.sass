@@ -1,0 +1,75 @@
+$label-color: #a3a3a3
+$border-color: #3d3f3f
+$border-radius: 2px
+
+*
+	box-sizing: border-box
+	margin: 0
+	padding: 0
+
+body
+	position: relative
+	font-size: 16px
+	line-height: 1.45
+	font-family: Arial, Helvetica, sans-serif
+	background: #fff
+
+main
+	height: 100vh
+	padding: 10px
+
+.form-container
+	display: block
+	margin: 0 auto
+	min-width: 350px
+	width: 370px
+	box-shadow: 0 0 8px 1px rgb(0 0 0 / 25%)
+	border-radius: 2px
+	background: #fff
+
+.form-sign-up
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+	min-height: 490px
+	position: relative
+	padding: 30px
+	&__title
+		text-align: center
+		font-weight: 600
+		font-size: 30px
+	&__label
+		color: $label-color
+		font-weight: 400 !important
+	&__button
+		text-transform: uppercase
+
+.input__wrapper
+	position: relative
+
+.btn__pass
+	width: 25px
+	height: 25px
+	position: absolute
+	top: 50%
+	right: 15px
+	transform: translateY(-50%)
+	background: transparent
+	border: 0
+	padding: 0
+	cursor: pointer
+	opacity: 0.5
+	outline: none
+	&:focus
+		outline: none
+
+.active
+	opacity: 1
+
+.show
+	display: block
+	opacity: 1
+
+.unshow
+	display: none
+	opacity: 0

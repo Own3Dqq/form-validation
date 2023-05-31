@@ -1,72 +1,83 @@
-import { Validator, isNotEmpty, isNumber, maxLength } from './js/validator.js';
+import {
+    Validator,
+    isNotEmpty,
+    maxLength,
+    minLength,
+    checkPassword,
+    checkEmail,
+    checkConfirmPassword,
+} from './js/validator.js';
 
 const humanFormConfigs = {
-    'first-name': [isNotEmpty /* maxLength(16) */],
-    'last-name': [isNotEmpty /* maxLength(16) */],
-    age: [isNotEmpty, isNumber],
+    'user-name': [isNotEmpty, minLength(4), maxLength(25)],
+    'user-email': [isNotEmpty, checkEmail()],
+    'user-password': [isNotEmpty, checkPassword()],
+    'user-password-confirm': [isNotEmpty, checkConfirmPassword()],
 };
 
 const init = function () {
-    let form = document.human;
-    let elements = form.elements;
-    let sendDtn = form.querySelector('.btn-send');
+    const btnPass = document.querySelectorAll('.js-btn-password');
+    const form = document.human;
+    const { elements } = form;
 
-    sendDtn.onclick = function (event) {
+    form.addEventListener('submit', (event) => {
         event.preventDefault();
 
         [...form.elements].forEach((el) => {
             if (el.type !== 'submit') {
-                let messageError = form.querySelector(
-                    `[data-for="${el.name}"]`
-                );
+                const messageError = form.querySelector(`[data-for="${el.name}"]`);
                 messageError.innerHTML = '';
                 el.classList.remove('error');
             }
         });
 
-        let isValid = Validator.validate(humanFormConfigs, form);
+        const isValid = Validator.validate(humanFormConfigs, form);
 
         if (!isValid) {
-            console.log(Validator.getErrors(form.name));
-            Object.entries(Validator.getErrors(form.name)).forEach(
-                ([name, error]) => {
-                    let messageError = form.querySelector(
-                        `[data-for="${name}"]`
-                    );
-                    form.elements[name].classList.add('error');
-                    messageError.innerHTML = Object.values(error)
-                        .map((message) => `<span>${message}</span>`)
-                        .join('<br>');
-                }
-            );
-
-            return;
+            Object.entries(Validator.getErrors(form.name)).forEach(([name, error]) => {
+                const messageError = form.querySelector(`[data-for="${name}"]`);
+                form.elements[name].classList.add('error');
+                messageError.innerHTML = Object.values(error)
+                    .map((message) => `<span>${message}</span>`)
+                    .join('<br>');
+            });
         }
-    };
+    });
 
     form.addEventListener('input', function (event) {
-        let target = event.target;
+        const { target } = event;
         if (!humanFormConfigs[target.name]) return;
 
-        let isValid = Validator.validate(
-            { [target.name]: humanFormConfigs[target.name] },
-            form
-        );
-        let errors = Object.values(
-            Validator.getErrors(form.name)?.[target.name] || {}
-        );
-        let messageError = form.querySelector(`[data-for="${target.name}"]`);
+        const isValid = Validator.validate({ [target.name]: humanFormConfigs[target.name] }, form);
+        const errors = Object.values(Validator.getErrors(form.name)?.[target.name] || {});
+        const messageError = form.querySelector(`[data-for="${target.name}"]`);
 
         if (!isValid) {
             target.classList.add('error');
-            messageError.innerHTML = errors
-                .map((message) => `<span>${message}</span>`)
-                .join('<br>');
-
+            messageError.innerHTML = errors.map((message) => `<span>${message}</span>`).join('<br>');
             return;
         }
+
         target.classList.remove('error');
         messageError.innerHTML = '';
+    });
+
+    btnPass.forEach((btn) => {
+        btn.addEventListener('click', function (event) {
+            event.preventDefault();
+            const target = this.getAttribute('data-target');
+            const inputPass = document.querySelector(target);
+
+            if (inputPass.getAttribute('type') === 'password') {
+                inputPass.setAttribute('type', 'text');
+                btn.children[0].classList.toggle('unshow');
+                btn.children[1].classList.toggle('unshow');
+            } else {
+                inputPass.setAttribute('type', 'password');
+                btn.children[0].classList.toggle('unshow');
+                btn.children[1].classList.toggle('unshow');
+            }
+        });
     });
 };
 
