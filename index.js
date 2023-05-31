@@ -9,7 +9,7 @@ import {
 } from './js/validator.js';
 
 const humanFormConfigs = {
-    'user-name': [isNotEmpty, minLength(4) /* maxLength(16) */],
+    'user-name': [isNotEmpty, minLength(4), maxLength(25)],
     'user-email': [isNotEmpty, checkEmail()],
     'user-password': [isNotEmpty, checkPassword()],
     'user-password-confirm': [isNotEmpty, checkConfirmPassword()],
@@ -54,14 +54,11 @@ const init = function () {
 
         if (!isValid) {
             target.classList.add('error');
-            target.classList.add('error-border');
             messageError.innerHTML = errors.map((message) => `<span>${message}</span>`).join('<br>');
-
             return;
         }
 
         target.classList.remove('error');
-        target.classList.add('correctly-border');
         messageError.innerHTML = '';
     });
 
@@ -73,10 +70,12 @@ const init = function () {
 
             if (inputPass.getAttribute('type') === 'password') {
                 inputPass.setAttribute('type', 'text');
-                btn.classList.add('active');
+                btn.children[0].classList.toggle('unshow');
+                btn.children[1].classList.toggle('unshow');
             } else {
                 inputPass.setAttribute('type', 'password');
-                btn.classList.remove('active');
+                btn.children[0].classList.toggle('unshow');
+                btn.children[1].classList.toggle('unshow');
             }
         });
     });

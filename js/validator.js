@@ -13,13 +13,13 @@ export const Validator = {
             message: 'The field should has a integer',
             errorType: 'number',
         },
-        maxLength(value) {
+        maxLength(maxValue = 25) {
             const validate = (valueInput) => {
-                return valueInput.length < value;
+                return valueInput.length < maxValue;
             };
 
-            const message = 'You have exceeded the maximum value';
-            const errorType = 'TypeError';
+            const message = `The field can be maximum ${maxValue} characters.`;
+            const errorType = 'length';
 
             return { validate, message, errorType };
         },
@@ -29,7 +29,17 @@ export const Validator = {
             };
 
             const message = `The field must be between ${minValue} and 25 characters.`;
-            const errorType = 'TypeError';
+            const errorType = 'length';
+
+            return { validate, message, errorType };
+        },
+        checkEmail() {
+            const validate = (value) => {
+                const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]{2,})?$/;
+                return emailRegex.test(value);
+            };
+            const message = 'Email address is invalid';
+            const errorType = 'email';
 
             return { validate, message, errorType };
         },
@@ -40,27 +50,32 @@ export const Validator = {
             };
             const message =
                 'Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 numbers, and 1 special character in (!@#$%^&*)';
-            const errorType = 'TypeError';
-            return { validate, message, errorType };
-        },
-        checkEmail() {
-            const validate = (value) => {
-                const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]{2,})?$/;
-                return emailRegex.test(value);
-            };
-            const message = 'Email address is invalid';
-            const errorType = 'ValidationError';
+            const errorType = 'password';
 
             return { validate, message, errorType };
         },
         checkConfirmPassword() {
-            const validate = (value) => {
-                const btnPass = document.querySelector('.js-password-input').value;
-                return btnPass === value;
-            };
+            const password = document.querySelector('#js-first-password');
+            const passwordConfirm = document.querySelector('#js-second-password');
 
             const message = 'Password a not equal';
-            const errorType = 'ValidationError';
+            const errorType = 'password_match';
+
+            const validate = (valueInputConfirmPassword) => {
+                return password.value === valueInputConfirmPassword;
+            };
+
+            password.addEventListener('input', (event) => {
+                if (password.value === passwordConfirm.value) {
+                    Validator.errors[passwordConfirm.name] = {};
+                } else {
+                    Validator.errors[passwordConfirm.name] = {
+                        ...Validator.errors[passwordConfirm.name],
+                        [errorType]: message,
+                    };
+                }
+            });
+
             return { validate, message, errorType };
         },
     },
@@ -74,9 +89,9 @@ export const Validator = {
         this.errors[form.name] = {};
 
         for (const [inputName, inputValidators] of Object.entries(config)) {
-            if (!inputValidators.length) {
-                continue;
-            }
+            // if (!inputValidators.length) {
+            //     continue;
+            // }
 
             if (!elements[inputName]) {
                 throw new ValidationError(`The [${inputName}] field doesn't exist in the [${form.name}]`);
